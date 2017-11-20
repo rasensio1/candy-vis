@@ -1,11 +1,9 @@
 # candy-vis
 
-A Clojure library designed to ... well, that part is up to you.
+A ClojureScript project that visualizes an algorithm that distributes candy to
+children.
 
-## Usage
-
-FIXME
-
+ADD LINK TO PROBLEM
 ## License
 
 Copyright © 2017 FIXME
