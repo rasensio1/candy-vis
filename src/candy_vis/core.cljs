@@ -1,6 +1,9 @@
 (ns candy-vis.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(enable-console-print!)
+
+(defonce context
+  (.getContext
+    (.getElementById js/document "target") "2d"))
+
+(.fillRect context 0 0 20 20)
