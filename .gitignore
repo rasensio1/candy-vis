@@ -14,3 +14,6 @@ pom.xml.asc
 *.log
 
 resources/public/js/out/*
+resources/public/cljs/*
+out/*
+.cljs_rhino_repl/*
