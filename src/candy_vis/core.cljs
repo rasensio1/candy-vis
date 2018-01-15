@@ -1,21 +1,23 @@
-(ns candy-vis.core)
+(ns ^:figwheel-always candy-vis.core
+  (:require [candy-vis.state :as st]
+            [candy-vis.bar-graph :as bg]))
 
 (enable-console-print!)
 
 (defonce context
-  (.getContext
+  (.getCoetext
     (.getElementById js/document "target") "2d"))
 
-(defonce children 15)
-(defonce canvas-width 800)
-(defonce canvas-height 800)
+(defn draw-state [state]
+  (bg/draw-candies (get @state :candies)))
 
-(defonce candy-width-offset 3)
-(defonce candy-height (quot canvas-height children))
-(def candy-width (quot (- 800 (* children candy-width-offset )) children))
 
-(def initial-state {:rankings [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]
-                    :candies (vec (repeat children 0))})
+
+;;   tick!
+;; draw candies
+;; stop if done
+;; update candies
+
 
 
 
