@@ -7,6 +7,7 @@
                  [figwheel-sidecar "0.5.8"]
                  [lein-doo "0.1.7"]
                  [devcards "0.2.4"]
+                 [reagent "0.7.0"]
                  [org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.946"]
                  ]
