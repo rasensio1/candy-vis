@@ -4,7 +4,7 @@
 
 (enable-console-print!)
 
-(drw/draw-state st/app-state)
+; (drw/draw-state st/app-state)
 
 ; (defn tick [state]
 ;   (drw/draw-state st/app-state)
