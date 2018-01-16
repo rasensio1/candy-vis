@@ -9,7 +9,7 @@
                  [devcards "0.2.4"]
                  [reagent "0.7.0"]
                  [org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.946"]
+                 [org.clojure/clojurescript "1.7.170"]
                  ]
   :plugins [[lein-cljsbuild "1.1.4" :exclusions [[org.clojure/clojure]]]
             [lein-figwheel "0.5.14"]
