@@ -4,11 +4,12 @@
 
 (enable-console-print!)
 
+(drw/draw-state st/app-state)
 
-(defn draw-state [state]
-  (drw/draw-candies (get @state :candies)))
-
-(draw-state st/app-state)
+; (defn tick [state]
+;   (drw/draw-state st/app-state)
+;   (swap! app-state (algo/next-state @app-state))
+;   )
 
 
 
