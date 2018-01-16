@@ -15,11 +15,11 @@
       ;; if back at beginning, update :finished
        (= nxt -1 ) {:finished true}
 
-      :else (if (and (< (nth ranks nxt) ;; next rank place higher than current?
+      :else (if (and (> (nth ranks nxt) ;; next rank higher than current?
                     (nth ranks idx))
                (<= (nth candies nxt) ;; next candies less or equal to current?
                   (nth candies idx)))
-        {:index (+ dir idx) :candies (update candies inc nxt)}; inc next candy
+        {:index (+ dir idx) :candies (assoc candies nxt (inc (nth candies idx)))}; next candy = this + 1
         {:index (+ dir idx)} ;; else, just update index
         )))) 
 
