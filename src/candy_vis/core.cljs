@@ -1,15 +1,14 @@
 (ns ^:figwheel-always candy-vis.core
   (:require [candy-vis.state :as st]
-            [candy-vis.bar-graph :as bg]))
+            [candy-vis.draw :as drw]))
 
 (enable-console-print!)
 
-(defonce context
-  (.getCoetext
-    (.getElementById js/document "target") "2d"))
 
 (defn draw-state [state]
-  (bg/draw-candies (get @state :candies)))
+  (drw/draw-candies (get @state :candies)))
+
+(draw-state st/app-state)
 
 
 
