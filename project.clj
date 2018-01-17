@@ -21,6 +21,7 @@
   :jvm-opts  ["--add-modules" "java.xml.bind"]
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
   :clean-targets ^{:protect false} [:target-path "out" "resources/public/js"]
+  :figwheel  {:css-dirs  ["resources/public/css"]}
   :cljsbuild { :builds [ {:id "dev" 
                           :source-paths ["src/"]
                           :figwheel true

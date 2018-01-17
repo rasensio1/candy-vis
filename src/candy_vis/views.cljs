@@ -6,8 +6,9 @@
 
 (defn rank-input []
   [:div.rank-input-container
-   [:input.form-control {:field :numeric :class :rank-field}] ])
+   [:input.form-control {:type :numeric :class :rank-field}] ])
 
-(defn rank-input-container [n]
-  [:div.rank-inputs-container
+(defn rank-inputs-container [n]
+  [:div.rank-inputs-container.text-center
    (repeat n [rank-input])])
+
