@@ -13,11 +13,19 @@
       (is (re-find #"Candies" (.-innerHTML c)))
      (tu/unmount! c) )))
 
-(deftest input-test
+(deftest rank-input-test
   (testing "Shows an input"
     (let [c (tu/new-container!)
-          _ (r/render [vw/candy-input] c)]
+          _ (r/render [vw/rank-input] c)]
       (is (re-find #"input" (.-innerHTML c)))
-      (is (re-find #"candy" (.-innerHTML c)))
+      (is (re-find #"rank" (.-innerHTML c)))
+     (tu/unmount! c) )))
+
+(deftest rank-input-contianer-test
+  (testing "Shows inputs within container"
+    (let [c (tu/new-container!)
+          _ (r/render [vw/rank-input-container 3] c)]
+      (is (re-find #"rank-input-container" (.-innerHTML c)))
+      (is (re-find #"rank-inputs-container" (.-innerHTML c)))
      (tu/unmount! c) )))
 

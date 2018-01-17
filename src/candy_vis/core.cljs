@@ -18,10 +18,3 @@
 
 (tick st/app-state)
 
-;; GAME PLAN
-;; First, solve a hard-coded setup. Black blocks
-;; Take input (#children, each grade) and solve
-
-;; NEXT??
-;; multiple algorithms
-;; more problems?

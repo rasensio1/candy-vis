@@ -4,6 +4,10 @@
   [:div
    [:h1 "How Many Candies?"]])
 
-(defn candy-input []
-  [:div
-   [:input.form-control {:field :numeric :id :candy}] ])
+(defn rank-input []
+  [:div.rank-input-container
+   [:input.form-control {:field :numeric :class :rank-field}] ])
+
+(defn rank-input-container [n]
+  [:div.rank-inputs-container
+   (repeat n [rank-input])])
