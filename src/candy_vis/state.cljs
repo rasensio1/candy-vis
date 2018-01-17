@@ -15,7 +15,7 @@
 ;; no offest between start of canvas and first child && end of canvas, last child
 (def candy-width-offset (quot (* canvas-width 0.25) max-candies))
 
-(def initial-state {:ranks [1 2 3 4 5 6 7 12 9 10 11 12 13 14 15]
+(def initial-state {:ranks [1 2 3 5 4 3 7 12 9 10 11 12 13 14 15]
                     :candies (vec (repeat children 1))
                     :index 0
                     :finished false

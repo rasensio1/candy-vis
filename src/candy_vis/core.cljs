@@ -1,26 +1,20 @@
 (ns ^:figwheel-always candy-vis.core
   (:require [candy-vis.state :as st]
+            [candy-vis.solve :as sol]
             [candy-vis.draw :as drw]))
 
 (enable-console-print!)
 
-(drw/draw-state st/app-state)
 
-; (defn tick [state]
-;   (drw/draw-state st/app-state)
-;   (swap! app-state (algo/next-state @app-state))
-;   )
+ (defn tick [state]
+   (drw/draw-state state)
+   (swap! state merge (sol/next-step @state))
+   (js-debugger)
+   (if (:finished @state)
+     (println "done")
+     (js/setTimeout (fn [] (tick state)) 500)))
 
-
-
-;;   tick!
-;; draw candies
-;; stop if done
-;; update candies
-
-
-
-
+(tick st/app-state)
 
 ;; GAME PLAN
 ;; First, solve a hard-coded setup. Black blocks
