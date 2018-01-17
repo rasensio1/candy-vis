@@ -1,9 +1,11 @@
 (ns candy-vis.state
-  (:require [reagent.core :as r :refer [atom]]))
+  (:require
+    [candy-vis.helpers :as hl]
+    [reagent.core :as r :refer [atom]]))
 
 (defonce children 15)
-(defonce canvas-width 800)
-(defonce canvas-height 500)
+(defonce canvas-width (.-width hl/canvas))
+(defonce canvas-height (.-height hl/canvas))
 (defonce max-candies (dec children))
 
 

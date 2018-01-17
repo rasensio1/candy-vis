@@ -9,7 +9,6 @@
  (defn tick [state]
    (drw/draw-state state)
    (swap! state merge (sol/next-step @state))
-   (js-debugger)
    (if (:finished @state)
      (println "done")
      (js/setTimeout (fn [] (tick state)) 500)))
