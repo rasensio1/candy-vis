@@ -3,7 +3,7 @@
 
 (defonce children 15)
 (defonce canvas-width 800)
-(defonce canvas-height 800)
+(defonce canvas-height 500)
 (defonce max-candies (dec children))
 
 
