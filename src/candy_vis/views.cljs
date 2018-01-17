@@ -1,4 +1,4 @@
-(ns candy-vis.views.general)
+(ns candy-vis.views)
 
 (defn header []
   [:div
