@@ -10,7 +10,7 @@
    (drw/draw-state state)
    (swap! state merge (sol/next-step @state))
    (if (:finished @state)
-     (println "done")
+     "done"
      (js/setTimeout (fn [] (tick state)) 500)))
 
 (tick st/app-state)

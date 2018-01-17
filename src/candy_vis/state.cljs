@@ -8,7 +8,6 @@
 (defonce canvas-height (.-height hl/canvas))
 (defonce max-candies (dec children))
 
-
 ;; max candies in solution is numbef of children + 1 
 (defonce candy-height (quot canvas-height (inc children))) 
 
