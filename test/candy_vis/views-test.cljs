@@ -6,23 +6,18 @@
             [candy-vis.views :as vw]
             [devcards.core :refer-macros [deftest]]))
 
-(def ^:dynamic c)
-
-; (use-fixtures :each (fn [test-fn]
-;                       (binding [c (tu/new-container!)]
-;                         (js-debugger)
-;                         (test-fn)
-;                         (tu/unmount! c))))
-
-; (deftest header-test
-;   (testing "Shows header"
-;     (let [display-node (r/render [vw/header] c)]
-;       (is (re-find #"Candies" (.-innerHTML display-node))) )))
-
 (deftest header-test
   (testing "Shows header"
     (let [c (tu/new-container!)
           _ (r/render [vw/header] c)]
       (is (re-find #"Candies" (.-innerHTML c)))
+     (tu/unmount! c) )))
+
+(deftest input-test
+  (testing "Shows an input"
+    (let [c (tu/new-container!)
+          _ (r/render [vw/candy-input] c)]
+      (is (re-find #"input" (.-innerHTML c)))
+      (is (re-find #"candy" (.-innerHTML c)))
      (tu/unmount! c) )))
 
