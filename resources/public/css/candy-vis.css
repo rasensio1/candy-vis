@@ -1,6 +1,33 @@
 .rank-input-container {
-  width: 50px;
-  display: inline-block;
-  margin: 2px;
+  padding: 5px;
 }
 
+.kid-num {
+  padding: 15px;
+  /* TODO this will be messed up when kids are added */ 
+}
+
+.kids-container {
+  justify-content: space-between;
+  display: flex;
+  width: 800px;
+  margin-right: auto;
+  margin-left: auto;
+  /* TODO link this to canvas width */
+}
+
+.rank-inputs-container {
+  justify-content: space-between;
+  display: flex;
+  width: 800px;
+  margin-right: auto;
+  margin-left: auto;
+  /* TODO link this to canvas width */
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+}

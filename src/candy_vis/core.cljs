@@ -8,7 +8,7 @@
 (enable-console-print!)
 
 (r/render [vw/header] (js/document.getElementById "header"))
-(r/render [vw/rank-inputs-container 15] (js/document.getElementById "body"))
+(r/render [vw/rank-form] (js/document.getElementById "body"))
 
  (defn tick [state]
    (drw/draw-state state)
