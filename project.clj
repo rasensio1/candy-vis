@@ -5,6 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[com.cemerick/piggieback "0.2.1"]
                  [figwheel-sidecar "0.5.8"]
+                 [rid3 "0.2.0"]
                  [lein-doo "0.1.7"]
                  [devcards "0.2.4"]
                  [reagent "0.7.0" :exclusions [cljsjs/react]]
@@ -22,7 +23,7 @@
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
   :clean-targets ^{:protect false} [:target-path "out" "resources/public/js"]
   :figwheel  {:css-dirs  ["resources/public/css"]}
-  :cljsbuild { :builds [ {:id "dev" 
+  :cljsbuild { :builds [ {:id "dev"
                           :source-paths ["src/"]
                           :figwheel true
                           :compiler {:main "candy-vis.core"

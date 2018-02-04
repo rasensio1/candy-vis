@@ -28,8 +28,8 @@
 
 (defn rank-form []
   [:div.form-body
-   [kids-container 15]
+   ;; [kids-container 15]
    [form-header]
-   [rank-inputs-container 15]
+   ;; [rank-inputs-container 15]
    [go-button]])
 

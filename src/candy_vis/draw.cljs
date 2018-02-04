@@ -1,18 +1,39 @@
 (ns candy-vis.draw
-  ( :require
-    [candy-vis.helpers :as hl]
-    [candy-vis.bar-graph :as bg]))
-
-(defn draw-bar [stats]
-  (let [{:keys [x y x-l y-l]} stats] (.fillRect hl/context x y x-l y-l)))
-
-(defn draw-bars [coll-stats]
-  (doseq [s coll-stats] (draw-bar s)))
-
-(defn draw-candies [candies]
-  (-> (map-indexed bg/bar-stats candies)
-      (draw-bars)))
+  (:require [rid3.core :as rid3]
+            [reagent.core :as r]))
 
 (defn draw-state [state]
-  (draw-candies (get @state :candies)))
+  (r/render [:div [viz state]]
+            (.getElementById js/document "testid")))
 
+(defn viz [ratom]
+  [rid3/viz
+   {:id "some-id"
+    :ratom ratom
+    :svg {:did-mount (fn [node _]
+                       (-> node
+                           (.attr "width" 200)
+                           (.attr "height" 200)
+                           (.style "background-color" "grey")))}
+    :pieces [{:kind :elem
+              :class "background"
+              :tag "circle"
+              :did-mount (fn [node _]
+                           (-> node
+                               (.attr "cx" 100)
+                               (.attr "cy" 100)
+                               (.attr "r" 50)))}
+             {:kind :elem
+              :class "foreground"
+              :tag "text"
+              :did-mount (fn [node _]
+                           (-> node
+                               (.attr "x" 100)
+                               (.attr "y" 100)
+                               (.attr "text-anchor" "middle")
+                               (.attr "alignment-baseline" "middle")
+                               (.attr "fill" "gree")
+                               (.attr "font-size" "24px")
+                               (.attr "font-family" "sans-serif")
+                               (.text "RID3")))}]
+    }])

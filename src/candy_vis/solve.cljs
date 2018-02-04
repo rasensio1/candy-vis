@@ -21,5 +21,5 @@
                   (nth candies idx)))
         {:index (+ dir idx) :candies (assoc candies nxt (inc (nth candies idx)))}; next candy = this + 1
         {:index (+ dir idx)} ;; else, just update index
-        )))) 
+        ))))
 
