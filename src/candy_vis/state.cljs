@@ -7,6 +7,7 @@
 
 (def initial-state {:ranks [1 2 3 5 4 14 13 12 9 10 11 12 13 14 15]
                     :candies (vec (repeat children 1))
+                    :dataset ["HI"]
                     :index 0
                     :finished false
                     :dir 1
