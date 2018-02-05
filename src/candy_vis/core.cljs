@@ -16,10 +16,9 @@
 (r/render [vw/rank-form] (js/document.getElementById "body"))
 
  (defn tick [state]
-   (let [drawelems (mapv mkmp (:ranks @state) (:candies @state))
-         dst (atom {:dataset drawelems})]
-     (println @dst)
-     (drw/draw-state dst))
+   (let [dst (mapv mkmp (:ranks @state) (:candies @state))]
+     (swap! state assoc :dataset dst))
+   (drw/draw-state state)
    (swap! state merge (sol/next-step @state))
    (if (:finished @state)
      "done"

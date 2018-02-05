@@ -16,14 +16,14 @@
 
 (defn candies-did-mount [node ratom]
   (-> node
-      (.attr "x" 200)
+      (.attr "x" (fn [_ i] (* i 30)))
       (.attr "y" 200)
       (.attr "text-anchor" "middle")
       (.attr "alignment-baseline" "middle")
       (.attr "fill" "green")
       (.attr "font-size" "24px" )
       (.attr "font-family" "sans-serif")
-      (.text (fn [d] (aget d "rank")))))
+      (.text (fn [d] (aget d "candies")))))
 
 (defn viz [ratom]
   [rid3/viz
@@ -33,11 +33,7 @@
     :pieces [{:kind :elem-with-data
               :class "candies"
               :tag "text"
-              :did-mount candies-did-mount}
-             {:kind :elem
-              :class "background"
-              :tag "circle"
-              :did-mount circle-did-mount}]}])
+              :did-mount candies-did-mount}]}])
 
 (defn draw-state [state]
   (r/render [:div [viz state]]
