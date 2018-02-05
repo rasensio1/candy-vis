@@ -3,13 +3,13 @@
 (defn next-step [state]
   "Returns a map with the updated values for :index :dir :candies"
   (let [idx (:index state)
-        nxt (+ (:dir state) idx)
+        dir (:dir state)
+        nxt (+ dir idx)
         candies (:candies state)
-        ranks (:ranks state)
-        dir (:dir state)]
+        ranks (:ranks state)]
     (cond
 
-      ;; if at the end of the list, just reverse the direction 
+      ;; if at the end of the list, just reverse the direction
       (= nxt (count candies)) {:dir (* -1 dir)}
 
       ;; if back at beginning, update :finished

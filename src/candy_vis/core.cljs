@@ -7,11 +7,19 @@
 
 (enable-console-print!)
 
+(defn mkmp [rnk cnd]
+  {:rank rnk :candies cnd})
+
+
+
 (r/render [vw/header] (js/document.getElementById "header"))
 (r/render [vw/rank-form] (js/document.getElementById "body"))
 
  (defn tick [state]
-   (drw/draw-state state)
+   (let [drawelems (mapv mkmp (:ranks @state) (:candies @state))
+         dst (atom {:dataset drawelems})]
+     (println @dst)
+     (drw/draw-state dst))
    (swap! state merge (sol/next-step @state))
    (if (:finished @state)
      "done"

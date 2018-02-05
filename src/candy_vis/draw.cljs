@@ -23,7 +23,7 @@
       (.attr "fill" "green")
       (.attr "font-size" "24px" )
       (.attr "font-family" "sans-serif")
-      (.text (fn [d] d))))
+      (.text (fn [d] (aget d "rank")))))
 
 (defn viz [ratom]
   [rid3/viz
