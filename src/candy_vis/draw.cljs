@@ -29,15 +29,19 @@
         y-scale (-> js/d3
                     .scaleLinear
                     (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
-                    (.range #js [page-height 0]))]
+                    (.range #js [page-height 0]))
+        x-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 bar-n])
+                    (.range #js [0 (- page-width (dec bar-n))]))]
     (-> node
         (.style "shape-rendering" "crispEdges")
         (.attr "fill" "green")
-        (.attr "x" (fn [_ i ] (+ 30 (* i 30))))
+        (.attr "x" (fn [_ i ] (+ i (x-scale i))))
         (.attr "y" (fn [d] (y-scale (aget d "candies"))))
         (.attr "height" (fn [d] (- (y-scale 0) (y-scale (aget d "candies")))))
         (.attr "opacity" 0.8)
-        (.attr "width" bar-w-inc))))
+        (.attr "width" (x-scale 1)))))
 
 (defn viz [ratom]
   [rid3/viz
