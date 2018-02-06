@@ -9,18 +9,29 @@
   (-> node
       (.attr "width" page-width)
       (.attr "height" page-height)
-      (.style "background-color" "grey")))
+      (.style "background-color" "white")))
 
 (defn candy-label-did-mount [node ratom]
+  (let [bar-n (count (get @ratom :dataset))
+        bar-h-inc (/ page-height bar-n)
+        bar-w-inc (/ page-width bar-n)
+        y-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
+                    (.range #js [page-height 0]))
+        x-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 bar-n])
+                    (.range #js [0 (- page-width (dec bar-n))]))]
   (-> node
-      (.attr "x" (fn [_ i] (+ 30 (* i 30))))
-      (.attr "y" 200)
+      (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
+      (.attr "y" (fn [d] (- (y-scale (aget d "candies")) 15)))
       (.attr "text-anchor" "middle")
       (.attr "alignment-baseline" "middle")
       (.attr "fill" "green")
       (.attr "font-size" "24px" )
       (.attr "font-family" "sans-serif")
-      (.text (fn [d] (aget d "candies")))))
+      (.text (fn [d] (aget d "candies"))))))
 
 (defn candy-bar-did-mount [node ratom]
   (let [bar-n (count (get @ratom :dataset))

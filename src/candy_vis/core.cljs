@@ -26,3 +26,10 @@
 
 (tick st/app-state)
 
+;; TODO
+;; Make candies labels in line
+;; Add x-labels to display ranks
+;; Make n-children dynamic with button
+;;  - add (with rank)
+;;  - remove last child
+
