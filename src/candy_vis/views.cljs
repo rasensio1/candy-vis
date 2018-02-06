@@ -18,9 +18,8 @@
     [:input.form-control
      {:type :submit :value "Add kid"
       :on-change #(reset! rank (-> % .-target .-value))
-      :on-click #(do (swap! state (partial merge-with conj) {:candies 1
-                                                             :ranks @rank})
-                     (println @state))}]]))
+      :on-click #(swap! state (partial merge-with conj) {:candies 1
+                                                         :ranks @rank})}]]))
 
 
 (let [myatm (atom {:can [1 2 3]})]
@@ -28,7 +27,10 @@
 
 (defn remove-kid-container [state]
   [:div.add-kid-container
-   [:input.form-control {:type :submit :value "Remove last kid"}]])
+   [:input.form-control
+    {:type :submit :value "Remove last kid"
+     :on-click #(swap! state assoc :candies (pop (:candies @state))
+                                   :ranks (pop (:ranks @state)))}]])
 
 (defn go-button [state]
   [:div.go-button
