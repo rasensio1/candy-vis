@@ -24,7 +24,9 @@
                     (.domain #js [0 bar-n])
                     (.range #js [0 (- page-width (dec bar-n))]))]
   (-> node
+      ;;                    pixel    centered        x-dist
       (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
+
       (.attr "y" (fn [d] (- (y-scale (aget d "candies")) 15)))
       (.attr "text-anchor" "middle")
       (.attr "alignment-baseline" "middle")
@@ -54,6 +56,25 @@
         (.attr "opacity" 0.8)
         (.attr "width" (x-scale 1)))))
 
+;; (defn create-x-scale [ratom]
+;;   (let [dataset (get @ratom :dataset)
+;;         width page-width
+;;         domain (map :rank dataset)]
+;;     (-> js/d3
+;;         .scaleBand
+;;         (.rangeRound #js [0 width])
+;;         (.padding 0.1)
+;;         (.domain (clj->js domain)))))
+
+;; (defn x-axis [node ratom]
+;;   (let [x-scale (create-x-scale ratom)]
+;;     (-> node
+;;         (.attr "transform" (str "translate(0," (- page-height 20) ")"))
+;;         (.call (.axisBottom js/d3 x-scale)))
+;;     (-> node
+;;         (.select "path")
+;;         (.style "stroke" "none"))))
+
 (defn viz [ratom]
   [rid3/viz
    {:id "some-id"
@@ -66,7 +87,11 @@
              {:kind :elem-with-data
               :class "candy-label"
               :tag "text"
-              :did-mount candy-label-did-mount}]}])
+              :did-mount candy-label-did-mount}
+             ;; {:kind :container
+             ;;  :class "x-axis"
+             ;;  :did-mount x-axis}
+             ]}])
 
 (defn draw-state [state]
   (r/render [:div [viz state]]
