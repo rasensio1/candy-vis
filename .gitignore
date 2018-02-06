@@ -12,6 +12,7 @@ pom.xml.asc
 *.swo
 *.swp
 *.log
+.#*
 
 resources/public/js/out/*
 resources/public/cljs/*

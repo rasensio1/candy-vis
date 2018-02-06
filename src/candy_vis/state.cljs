@@ -7,7 +7,6 @@
 
 (def initial-state {:ranks default-ranks
                     :candies (mapv (fn [e] 1) default-ranks)
-                    :dataset []
                     :index 0
                     :finished false
                     :dir 1})

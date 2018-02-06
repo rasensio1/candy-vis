@@ -17,22 +17,13 @@
 (r/render [vw/rank-form app-state] (js/document.getElementById "body"))
 (drw/draw-state app-state)
 
- (defn tick [state]
-   (swap! state merge (sol/next-step @state))
-
-   ;; updates the ":dataset" attr for rid3
-   (let [dst (mapv mkmp (:ranks @state) (:candies @state))]
-     (swap! state assoc :dataset dst))
-
-   (if (:finished @state)
-     "done"
-     (js/setTimeout (fn [] (tick state)) 500)))
+(defn tick [state]
+  (swap! state merge (sol/next-step @state))
+  (if (:finished @state)
+    "done"
+    (js/setTimeout (fn [] (tick state)) 500)))
 
 (tick app-state)
 
 ;; TODO
 ;; Add x-labels to display ranks
-;; Make n-children dynamic with button
-;;  - add (with rank)
-;;  - remove last child
-

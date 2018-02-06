@@ -5,6 +5,9 @@
 (def page-height 400)
 (def page-width 600)
 
+(defn n-kids [ratom]
+  (count (get @ratom :candies)))
+
 (defn svg-did-mount [node ratom]
   (-> node
       (.attr "width" page-width)
@@ -12,7 +15,7 @@
       (.style "background-color" "white")))
 
 (defn rank-label-did-mount [node ratom]
-  (let [bar-n (count (get @ratom :dataset))
+  (let [bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (-> js/d3
@@ -36,7 +39,7 @@
         (.text (fn [d] (aget d "rank"))))))
 
 (defn candy-label-did-mount [node ratom]
-  (let [bar-n (count (get @ratom :dataset))
+  (let [bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (-> js/d3
@@ -48,19 +51,18 @@
                     (.domain #js [0 bar-n])
                     (.range #js [0 (- page-width (dec bar-n))]))]
   (-> node
-      ;;                    pixel    centered        x-dist
+      ;;               margin pixel  centered        x-dist
       (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
-
       (.attr "y" (fn [d] (- (y-scale (aget d "candies")) 15)))
       (.attr "text-anchor" "middle")
       (.attr "alignment-baseline" "middle")
       (.attr "fill" "green")
-      (.attr "font-size" "24px" )
+      (.attr "font-size" "24px")
       (.attr "font-family" "sans-serif")
       (.text (fn [d] (aget d "candies"))))))
 
 (defn candy-bar-did-mount [node ratom]
-  (let [bar-n (count (get @ratom :dataset))
+  (let [bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (-> js/d3
@@ -99,6 +101,13 @@
 ;;         (.select "path")
 ;;         (.style "stroke" "none"))))
 
+(defn mkmp [rnk cnd]
+  {:rank rnk :candies cnd})
+
+(defn set-draw-dst [ratom]
+  (let [res (mapv mkmp (get @ratom :ranks) (get @ratom :candies ))]
+    (-> res clj->js)))
+
 (defn viz [ratom]
   [rid3/viz
    {:id "some-id"
@@ -107,13 +116,16 @@
     :pieces [{:kind :elem-with-data
               :class "candy-bar"
               :tag "rect"
+              :prepare-dataset set-draw-dst
               :did-mount candy-bar-did-mount}
              {:kind :elem-with-data
               :class "candy-label"
+              :prepare-dataset set-draw-dst
               :tag "text"
               :did-mount candy-label-did-mount}
              {:kind :elem-with-data
               :class "rank-label"
+              :prepare-dataset set-draw-dst
               :tag "text"
               :did-mount rank-label-did-mount}
              ;; {:kind :container
