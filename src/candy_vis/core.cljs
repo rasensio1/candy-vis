@@ -15,12 +15,15 @@
 
 (r/render [vw/header] (js/document.getElementById "header"))
 (r/render [vw/rank-form app-state] (js/document.getElementById "body"))
+(drw/draw-state app-state)
 
  (defn tick [state]
-   (drw/draw-state state)
    (swap! state merge (sol/next-step @state))
+
+   ;; updates the ":dataset" attr for rid3
    (let [dst (mapv mkmp (:ranks @state) (:candies @state))]
      (swap! state assoc :dataset dst))
+
    (if (:finished @state)
      "done"
      (js/setTimeout (fn [] (tick state)) 500)))
