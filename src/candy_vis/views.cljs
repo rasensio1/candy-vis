@@ -14,16 +14,12 @@
 (defn add-kid-container [state]
   (let [rank (r/atom 1)]
    [:div.add-kid-container
-    [:input.form-control {:type :number :placeholder "Rank goes here" }]
+    [:input.form-control {:type :number :placeholder "Rank goes here"
+                          :on-change #(reset! rank (-> % .-target .-value))}]
     [:input.form-control
      {:type :submit :value "Add kid"
-      :on-change #(reset! rank (-> % .-target .-value))
       :on-click #(swap! state (partial merge-with conj) {:candies 1
                                                          :ranks @rank})}]]))
-
-
-(let [myatm (atom {:can [1 2 3]})]
-  (swap! myatm (partial merge-with conj) {:can 1}))
 
 (defn remove-kid-container [state]
   [:div.add-kid-container
