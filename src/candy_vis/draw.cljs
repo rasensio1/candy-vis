@@ -11,6 +11,30 @@
       (.attr "height" page-height)
       (.style "background-color" "white")))
 
+(defn rank-label-did-mount [node ratom]
+  (let [bar-n (count (get @ratom :dataset))
+        bar-h-inc (/ page-height bar-n)
+        bar-w-inc (/ page-width bar-n)
+        y-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
+                    (.range #js [page-height 0]))
+        x-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 bar-n])
+                    (.range #js [0 (- page-width (dec bar-n))]))]
+    (-> node
+        ;;                    pixel    centered        x-dist
+        (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
+
+        (.attr "y" 20)
+        (.attr "text-anchor" "middle")
+        (.attr "alignment-baseline" "middle")
+        (.attr "fill" "green")
+        (.attr "font-size" "24px" )
+        (.attr "font-family" "sans-serif")
+        (.text (fn [d] (aget d "rank"))))))
+
 (defn candy-label-did-mount [node ratom]
   (let [bar-n (count (get @ratom :dataset))
         bar-h-inc (/ page-height bar-n)
@@ -88,6 +112,10 @@
               :class "candy-label"
               :tag "text"
               :did-mount candy-label-did-mount}
+             {:kind :elem-with-data
+              :class "rank-label"
+              :tag "text"
+              :did-mount rank-label-did-mount}
              ;; {:kind :container
              ;;  :class "x-axis"
              ;;  :did-mount x-axis}

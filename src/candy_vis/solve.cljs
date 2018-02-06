@@ -11,9 +11,8 @@
 
       ;; if at the end of the list, just reverse the direction
       (= nxt (count candies)) {:dir (* -1 dir)}
-
       ;; if back at beginning, update :finished
-       (= nxt -1 ) {:finished true}
+      (= nxt -1 ) {:finished true}
 
       :else (if (and (> (nth ranks nxt) ;; next rank higher than current?
                     (nth ranks idx))

@@ -1,4 +1,5 @@
-(ns candy-vis.views)
+(ns candy-vis.views
+  (:require [reagent.core :as r]))
 
 (defn header []
   [:div [:h1 "How Many Candies?"]])
@@ -10,23 +11,33 @@
   [:div.text-center
    [:h3 "Add a kiddo"]])
 
-(defn add-kid-container []
+(defn add-kid-container [state]
+  (let [rank (r/atom 1)]
    [:div.add-kid-container
     [:input.form-control {:type :number :placeholder "Rank goes here" }]
-    [:input.form-control {:type :submit :value "Add"}]])
+    [:input.form-control
+     {:type :submit :value "Add kid"
+      :on-change #(reset! rank (-> % .-target .-value))
+      :on-click #(do (swap! state (partial merge-with conj) {:candies 1
+                                                             :ranks @rank})
+                     (println @state))}]]))
 
-(defn remove-kid-container []
+
+(let [myatm (atom {:can [1 2 3]})]
+  (swap! myatm (partial merge-with conj) {:can 1}))
+
+(defn remove-kid-container [state]
   [:div.add-kid-container
    [:input.form-control {:type :submit :value "Remove last kid"}]])
 
-(defn go-button []
+(defn go-button [state]
   [:div.go-button
    [:input.form-control {:type :submit :value "Distribute Candies"}] ])
 
-(defn rank-form []
+(defn rank-form [state]
   [:div.form-body
    [form-header]
-   [add-kid-container]
-   [remove-kid-container]
-   [go-button]])
+   [add-kid-container state]
+   [remove-kid-container state]
+   [go-button state]])
 

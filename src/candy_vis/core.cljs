@@ -10,10 +10,11 @@
 (defn mkmp [rnk cnd]
   {:rank rnk :candies cnd})
 
+(defonce app-state (r/atom st/initial-state))
 
 
 (r/render [vw/header] (js/document.getElementById "header"))
-(r/render [vw/rank-form] (js/document.getElementById "body"))
+(r/render [vw/rank-form app-state] (js/document.getElementById "body"))
 
  (defn tick [state]
    (drw/draw-state state)
@@ -24,7 +25,7 @@
      "done"
      (js/setTimeout (fn [] (tick state)) 500)))
 
-(tick st/app-state)
+(tick app-state)
 
 ;; TODO
 ;; Add x-labels to display ranks

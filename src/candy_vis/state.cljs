@@ -11,8 +11,5 @@
                     :index 0
                     :finished false
                     :dir 1
-                    ;; can get rid of children and base it on rankings
-                    :children children
                     :history [] })
 
-(defonce app-state (r/atom initial-state))
