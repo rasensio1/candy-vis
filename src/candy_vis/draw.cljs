@@ -25,14 +25,18 @@
 (defn candy-bar-did-mount [node ratom]
   (let [bar-n (count (get @ratom :dataset))
         bar-h-inc (/ page-height bar-n)
-        bar-w-inc (/ page-width bar-n)]
+        bar-w-inc (/ page-width bar-n)
+        y-scale (-> js/d3
+                    .scaleLinear
+                    (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
+                    (.range #js [page-height 0]))]
     (-> node
         (.style "shape-rendering" "crispEdges")
         (.attr "fill" "green")
         (.attr "x" (fn [_ i ] (+ 30 (* i 30))))
-        (.attr "y" 100)
-        (.attr "height" (fn [d] (* bar-h-inc (aget d "candies"))))
-        (.attr "opacity" 0.2)
+        (.attr "y" (fn [d] (y-scale (aget d "candies"))))
+        (.attr "height" (fn [d] (- (y-scale 0) (y-scale (aget d "candies")))))
+        (.attr "opacity" 0.8)
         (.attr "width" bar-w-inc))))
 
 (defn viz [ratom]
