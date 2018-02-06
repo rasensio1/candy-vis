@@ -6,30 +6,27 @@
 (defn kid-num []
   [:div.kid-num.text-center [:p 6] ])
 
-(defn kids-container [n]
-  [:div.kids-container
-   (repeat n [kid-num]) ])
-
 (defn form-header []
   [:div.text-center
-   [:h3 "Choose each kiddo's rank"]])
+   [:h3 "Add a kiddo"]])
 
-(defn rank-input []
-  [:div.rank-input-container
-   [:input.form-control {:type :number :value 1 }] ])
+(defn add-kid-container []
+   [:div.add-kid-container
+    [:input.form-control {:type :number :placeholder "Rank goes here" }]
+    [:input.form-control {:type :submit :value "Add"}]])
 
-(defn rank-inputs-container [n]
-  [:div.rank-inputs-container
-   (repeat n [rank-input])])
+(defn remove-kid-container []
+  [:div.add-kid-container
+   [:input.form-control {:type :submit :value "Remove last kid"}]])
 
 (defn go-button []
   [:div.go-button
-   [:input.form-control {:type :submit :value "Submit"}] ])
+   [:input.form-control {:type :submit :value "Distribute Candies"}] ])
 
 (defn rank-form []
   [:div.form-body
-   ;; [kids-container 15]
    [form-header]
-   ;; [rank-inputs-container 15]
+   [add-kid-container]
+   [remove-kid-container]
    [go-button]])
 
