@@ -1,6 +1,7 @@
 (ns candy-vis.views
-  (:require [reagent.core :as r]
-            [candy-vis.run :as run]))
+   (:require [reagent.core :as r]
+             [candy-vis.run :as run]
+             [candy-vis.state :as st]))
 
 (defn header []
   [:div [:h1 "How Many Candies?"]])
@@ -35,10 +36,17 @@
                          :value "Distribute Candies"
                          :on-click #(run/tick state)}]])
 
+(defn reset-button [state]
+  [:div.reset-button
+   [:input.form-control {:type :submit
+                         :value "Reset kiddos"
+                         :on-click #(reset! state st/initial-state)}]])
+
 (defn rank-form [state]
   [:div.form-body
    [form-header]
    [add-kid-container state]
    [remove-kid-container state]
+   [reset-button state]
    [go-button state]])
 

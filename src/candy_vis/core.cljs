@@ -7,9 +7,6 @@
 
 (enable-console-print!)
 
-(defn mkmp [rnk cnd]
-  {:rank rnk :candies cnd})
-
 (defonce app-state (r/atom st/initial-state))
 
 
@@ -19,7 +16,7 @@
 
 
 ;; TODO
-;; wait to start until button is clicked
-;; add "reset-state" button
+;; move all swap! ing to a 'reducers' file
 ;; move x-labels to display ranks to bottom
+;; Add pointer for index
 ;; Add random kid button

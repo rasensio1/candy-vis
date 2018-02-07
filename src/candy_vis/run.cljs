@@ -5,4 +5,4 @@
   (swap! state merge (sol/next-step @state))
   (if (:finished @state)
     "done"
-    (js/setTimeout (fn [] (tick state)) 500)))
+    (js/setTimeout (fn [] (tick state)) 300)))
