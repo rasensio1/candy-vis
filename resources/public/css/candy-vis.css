@@ -1,33 +1,43 @@
-.rank-input-container {
-  padding: 5px;
+#candies-header {
+    padding: 2em;}
+
+#options-form {
+    margin: 7em;
+    margin-top: 6em;}
+
+#form-container {
+    display: flex;}
+
+#add-container {
+    flex-basis: 50%}
+
+.inlinesec {
+    display: flex;
+    align-items: baseline;
 }
 
-.kid-num {
-  padding: 15px;
-  /* TODO this will be messed up when kids are added */ 
+.f80 {
+    margin-right: 1em;
+    flex-basis: 80%;}
+.f20 {
+    flex-basis: 20%;}
+
+#other-container {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-evenly;
 }
 
-.kids-container {
-  justify-content: space-between;
-  display: flex;
-  width: 800px;
-  margin-right: auto;
-  margin-left: auto;
-  /* TODO link this to canvas width */
+.greybox {
+    background: whitesmoke;
+    border-radius: 0.5em;
+    padding: 1em;
+    margin: 0.5em;}
+
+#go-button {
+    margin-top: 2em;
 }
 
-.rank-inputs-container {
-  justify-content: space-between;
-  display: flex;
-  width: 800px;
-  margin-right: auto;
-  margin-left: auto;
-  /* TODO link this to canvas width */
-}
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0;
-}

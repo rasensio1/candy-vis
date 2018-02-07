@@ -10,10 +10,11 @@
 
 
 (r/render [vw/header] (js/document.getElementById "header"))
-(r/render [vw/rank-form app-state] (js/document.getElementById "body"))
+(r/render [vw/options-form app-state] (js/document.getElementById "body"))
 (drw/draw-state app-state)
 
 
 ;; TODO
-;; Display total when algo finishes
 ;; Styling!
+;; Display total when algo finishes
+;; Choose algorithm
