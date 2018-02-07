@@ -60,7 +60,8 @@
       (.text (fn [d] (aget d "candies"))))))
 
 (defn candy-bar-did-mount [node ratom]
-  (let [bar-n (n-kids ratom)
+  (let [idx (get @ratom :index)
+        bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (-> js/d3
@@ -73,7 +74,8 @@
                     (.range #js [0 (- page-width (dec bar-n))]))]
     (-> node
         (.style "shape-rendering" "crispEdges")
-        (.attr "fill" "green")
+        ;; highlight current bar
+        (.attr "fill" (fn [_ i] (if (= idx i) "lawngreen" "green")))
         (.attr "x" (fn [_ i ] (+ i (x-scale i))))
         (.attr "y" (fn [d] (y-scale (aget d "candies"))))
         (.attr "height" (fn [d] (- (y-scale 0) (y-scale (aget d "candies")))))

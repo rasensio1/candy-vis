@@ -15,7 +15,6 @@
 
 
 ;; TODO
-;; Add pointer for index
-;; Add random kid button
+;; Add random kid button (with number)
 ;; Display total when algo finishes
 ;; Add speed option (like for large datasets)
