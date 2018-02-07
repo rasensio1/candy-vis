@@ -18,3 +18,5 @@
 (defn reset-state [state]
   (reset! state st/initial-state))
 
+(defn change-speed [state speed]
+  (swap! state assoc :speed speed))

@@ -38,7 +38,7 @@
 (defn reset-button [state]
   [:div.reset-button
    [:input.form-control {:type :submit
-                         :value "Reset kiddos"
+                         :value "Reset All"
                          :on-click #(swp/reset-state state)}]])
 
 (defn random-kid-container [state]
@@ -52,6 +52,14 @@
     {:type :submit :value "Add random kids"
      :on-click #(swp/add-rando-kids state @num)}]]))
 
+(defn speed-options [state]
+  [:h3 "single-select buttons"]
+  [:div.btn-group {:field :single-select :id :unique.position}
+   [:button.btn.btn-default {:on-click #(swp/change-speed state :medium)} "Medium"]
+   [:button.btn.btn-default {:on-click #(swp/change-speed state :fast)} "Fast"]
+   [:button.btn.btn-default {:on-click #(swp/change-speed state :fastest)} "Fastest"]]
+  )
+
 (defn rank-form [state]
   [:div.form-body
    [form-header]
@@ -59,5 +67,6 @@
    [random-kid-container state]
    [remove-kid-container state]
    [reset-button state]
-   [go-button state]])
+   [go-button state]
+   [speed-options state]])
 
