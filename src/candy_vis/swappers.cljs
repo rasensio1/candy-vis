@@ -8,6 +8,9 @@
   (swap! state (partial merge-with conj) {:candies 1
                                            :ranks rank}))
 
+(defn add-rando-kids [state n-kids]
+  (dotimes [n n-kids] (add-kid state (+ 1 (rand-int 50)))))
+
 (defn remove-kid [state]
   (swap! state assoc :candies (pop (:candies @state))
                       :ranks (pop (:ranks @state))))

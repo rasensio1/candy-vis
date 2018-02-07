@@ -41,10 +41,22 @@
                          :value "Reset kiddos"
                          :on-click #(swp/reset-state state)}]])
 
+(defn random-kid-container [state]
+  ;; TODO regular atom?
+  (let [num (r/atom 1)]
+    [:div.random-kid-container
+   [:input.form-control
+    {:type :number :placeholder "How many random kids?"
+     :on-change #(reset! num (-> % .-target .-value))}]
+   [:input.form-control
+    {:type :submit :value "Add random kids"
+     :on-click #(swp/add-rando-kids state @num)}]]))
+
 (defn rank-form [state]
   [:div.form-body
    [form-header]
    [add-kid-container state]
+   [random-kid-container state]
    [remove-kid-container state]
    [reset-button state]
    [go-button state]])
