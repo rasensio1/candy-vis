@@ -15,8 +15,6 @@
 
 
 ;; TODO
-;; Styling!
-;; CSV add kids
 ;; Clean up project.clj (vi deps, etc)
 ;; Bind to reagent-forms
 ;; fill in tests

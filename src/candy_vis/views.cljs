@@ -11,7 +11,7 @@
    [:h3 "Options"]])
 
 (defn add-kid-container [state]
-  (let [rank (r/atom 1)]
+  (let [rank (r/atom "1")]
     [:div#add-kid-container
      [:p.add-prompt "With what ranks? (comma separted values)"]
      [:div.inlinesec
@@ -20,7 +20,7 @@
         :on-change #(reset! rank (-> % .-target .-value))}]
       [:input.form-control.f20
        {:type :submit :value "Submit"
-        :on-click #(swp/add-kid state @rank)}]]]))
+        :on-click #(swp/add-kids state @rank)}]]]))
 
 (defn add-random-kid-container [state]
   ;; TODO regular atom?

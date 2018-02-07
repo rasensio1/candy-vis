@@ -8,6 +8,15 @@
   (swap! state (partial merge-with conj) {:candies 1
                                            :ranks rank}))
 
+(defn get-ranks [raw-ranks]
+  (as-> (clojure.string/replace raw-ranks #"[^,\d]" "") s
+       (clojure.string/split s #"," )
+       (map int s)))
+
+(defn add-kids [state ranks]
+  (doseq [n (get-ranks ranks)]
+    (add-kid state n)))
+
 (defn add-rando-kids [state n-kids]
   (dotimes [n n-kids] (add-kid state (+ 1 (rand-int 50)))))
 
