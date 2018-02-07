@@ -21,13 +21,13 @@
           :on-change #(reset! rank (-> % .-target .-value))}]
     [:input.form-control
      {:type :submit :value "Add kid"
-      :on-click (swp/add-kid state @rank)}]]))
+      :on-click #(swp/add-kid state @rank)}]]))
 
 (defn remove-kid-container [state]
   [:div.add-kid-container
    [:input.form-control
     {:type :submit :value "Remove last kid"
-     :on-click (swp/remove-kid state)}]])
+     :on-click #(swp/remove-kid state)}]])
 
 (defn go-button [state]
   [:div.go-button
@@ -39,7 +39,7 @@
   [:div.reset-button
    [:input.form-control {:type :submit
                          :value "Reset kiddos"
-                         :on-click (swp/reset-state state)}]])
+                         :on-click #(swp/reset-state state)}]])
 
 (defn rank-form [state]
   [:div.form-body

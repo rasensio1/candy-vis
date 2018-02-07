@@ -28,11 +28,11 @@
     (-> node
         (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
 
-        (.attr "y" 20)
+        (.attr "y" (- page-height 10))
         (.attr "text-anchor" "middle")
         (.attr "alignment-baseline" "middle")
-        (.attr "fill" "green")
-        (.attr "font-size" "24px" )
+        (.attr "fill" "black")
+        (.attr "font-size" (str (/ bar-w-inc 2) "px") )
         (.attr "font-family" "sans-serif")
         (.text (fn [d] (aget d "rank"))))))
 
@@ -55,7 +55,7 @@
       (.attr "text-anchor" "middle")
       (.attr "alignment-baseline" "middle")
       (.attr "fill" "green")
-      (.attr "font-size" "24px")
+      (.attr "font-size" (str (/ bar-w-inc 1.5) "px") )
       (.attr "font-family" "sans-serif")
       (.text (fn [d] (aget d "candies"))))))
 
@@ -80,6 +80,25 @@
         (.attr "opacity" 0.8)
         (.attr "width" (x-scale 1)))))
 
+(defn key-label [node ratom]
+  (-> node
+      (.attr "x" 30) (.attr "y" 30)
+      (.text "Key:")
+      (.attr "font-size" "20px" )))
+
+(defn key-candies [node ratom]
+  (-> node
+      (.attr "x" 40) (.attr "y" 50)
+      (.attr "font-size" "15px" )
+      (.attr "fill" "green" )
+      (.text "(Green) - How many candies each child has.")))
+
+(defn key-rank [node ratom]
+  (-> node
+      (.attr "x" 40) (.attr "y" 70)
+      (.attr "font-size" "15px" )
+      (.text "(Black) - The starting rank of each child.")))
+
 (defn mkmp [rnk cnd]
   {:rank rnk :candies cnd})
 
@@ -92,7 +111,16 @@
    {:id "some-id"
     :ratom ratom
     :svg {:did-mount svg-did-mount}
-    :pieces [{:kind :elem-with-data
+    :pieces [{:kind :container
+              :class "key-container"
+              :children
+              [{:kind :elem :class "key-label"
+                :tag "text" :did-mount key-label}
+               {:kind :elem :class "key-candies"
+                :tag "text" :did-mount key-candies}
+               {:kind :elem :class "key-rank"
+                :tag "text" :did-mount key-rank}]}
+             {:kind :elem-with-data
               :class "candy-bar"
               :tag "rect"
               :prepare-dataset set-draw-dst
