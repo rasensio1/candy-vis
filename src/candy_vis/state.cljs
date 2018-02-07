@@ -9,6 +9,6 @@
                     :candies (mapv (fn [e] 1) default-ranks)
                     :index 0
                     :finished false
-                    :speed :medium
+                    :speed 500
                     :dir 1})
 
