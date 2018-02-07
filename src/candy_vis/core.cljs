@@ -16,7 +16,8 @@
 
 
 ;; TODO
-;; move all swap! ing to a 'reducers' file
 ;; move x-labels to display ranks to bottom
 ;; Add pointer for index
 ;; Add random kid button
+;; Display total when algo finishes
+;; Add speed option (like for large datasets)

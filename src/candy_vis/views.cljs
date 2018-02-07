@@ -1,7 +1,7 @@
 (ns candy-vis.views
    (:require [reagent.core :as r]
              [candy-vis.run :as run]
-             [candy-vis.state :as st]))
+             [candy-vis.swappers :as swp]))
 
 (defn header []
   [:div [:h1 "How Many Candies?"]])
@@ -15,20 +15,19 @@
 
 (defn add-kid-container [state]
   (let [rank (r/atom 1)]
-   [:div.add-kid-container
-    [:input.form-control {:type :number :placeholder "Rank goes here"
-                          :on-change #(reset! rank (-> % .-target .-value))}]
+    [:div.add-kid-container
+      [:input.form-control
+        {:type :number :placeholder "rank goes here"
+          :on-change #(reset! rank (-> % .-target .-value))}]
     [:input.form-control
      {:type :submit :value "Add kid"
-      :on-click #(swap! state (partial merge-with conj) {:candies 1
-                                                         :ranks @rank})}]]))
+      :on-click (swp/add-kid state @rank)}]]))
 
 (defn remove-kid-container [state]
   [:div.add-kid-container
    [:input.form-control
     {:type :submit :value "Remove last kid"
-     :on-click #(swap! state assoc :candies (pop (:candies @state))
-                                   :ranks (pop (:ranks @state)))}]])
+     :on-click (swp/remove-kid state)}]])
 
 (defn go-button [state]
   [:div.go-button
@@ -40,7 +39,7 @@
   [:div.reset-button
    [:input.form-control {:type :submit
                          :value "Reset kiddos"
-                         :on-click #(reset! state st/initial-state)}]])
+                         :on-click (swp/reset-state state)}]])
 
 (defn rank-form [state]
   [:div.form-body

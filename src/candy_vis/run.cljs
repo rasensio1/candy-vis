@@ -1,8 +1,9 @@
 (ns candy-vis.run
-  (:require [candy-vis.solve :as sol]))
+  (:require [candy-vis.solve :as sol]
+            [candy-vis.swappers :as swp]))
 
 (defn tick [state]
-  (swap! state merge (sol/next-step @state))
+  (swp/algo-step state (sol/next-step @state))
   (if (:finished @state)
     "done"
     (js/setTimeout (fn [] (tick state)) 300)))
