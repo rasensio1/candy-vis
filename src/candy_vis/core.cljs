@@ -26,4 +26,7 @@
 (tick app-state)
 
 ;; TODO
-;; Add x-labels to display ranks
+;; wait to start until button is clicked
+;; add "reset-state" button
+;; move x-labels to display ranks to bottom
+;; Add random kid button
