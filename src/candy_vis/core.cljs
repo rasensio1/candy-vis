@@ -17,13 +17,6 @@
 (r/render [vw/rank-form app-state] (js/document.getElementById "body"))
 (drw/draw-state app-state)
 
-(defn tick [state]
-  (swap! state merge (sol/next-step @state))
-  (if (:finished @state)
-    "done"
-    (js/setTimeout (fn [] (tick state)) 500)))
-
-(tick app-state)
 
 ;; TODO
 ;; wait to start until button is clicked

@@ -1,5 +1,6 @@
 (ns candy-vis.views
-  (:require [reagent.core :as r]))
+  (:require [reagent.core :as r]
+            [candy-vis.run :as run]))
 
 (defn header []
   [:div [:h1 "How Many Candies?"]])
@@ -30,7 +31,9 @@
 
 (defn go-button [state]
   [:div.go-button
-   [:input.form-control {:type :submit :value "Distribute Candies"}] ])
+   [:input.form-control {:type :submit
+                         :value "Distribute Candies"
+                         :on-click #(run/tick state)}]])
 
 (defn rank-form [state]
   [:div.form-body
