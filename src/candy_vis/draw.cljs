@@ -2,17 +2,23 @@
   (:require [rid3.core :as rid3]
             [reagent.core :as r]))
 
-(def page-height 400)
-(def page-width 600)
+(def viz-height 400)
+(def viz-width 600)
 
 (defn n-kids [ratom]
   (count (get @ratom :candies)))
 
+(defn set-attr [node [attr settr]]
+  (.attr node attr settr))
+
+(defn set-attrs [node attr-opts]
+  (doseq [opts attr-opts]
+    (set-attr node opts)))
+
 (defn svg-did-mount [node ratom]
-  (-> node
-      (.attr "width" page-width)
-      (.attr "height" page-height)
-      (.style "background-color" "white")))
+  (set-attrs node [["width" viz-width]
+                   ["height" viz-height]])
+  (.style node "background-color" "white"))
 
 (defn mk-scale [domain length]
   (-> js/d3
@@ -26,17 +32,6 @@
 (defn mk-y-scale [bar-n height]
    (mk-scale bar-n (clj->js [height 0])))
 
-(defn set-attr [node [attr settr]]
-  (.attr node attr settr))
-
-;; could change this to acccept all props
-;; input like {:attr [["x" 20] ["y" 30] ...]
-;;             :text "hello"
-;;             :style "something"}
-(defn set-attrs [node attr-opts]
-  (doseq [opts attr-opts]
-    (set-attr node opts)))
-
 (defn center-scale-pos [idx scale]
 ;; paddings  centered      x-dist
   (+ idx (/ (scale 1) 2) (scale idx)))
@@ -46,10 +41,10 @@
 
 (defn rank-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
-        bar-w-inc (/ page-width bar-n)
-        x-scale (mk-x-scale bar-n page-width)]
+        bar-w-inc (/ viz-width bar-n)
+        x-scale (mk-x-scale bar-n viz-width)]
     (.text node (fn [d] (aget d "rank")))
-    (set-attrs node [["y" (- page-height 10)]
+    (set-attrs node [["y" (- viz-height 10)]
                      ["x" (fn [_ i ] (center-scale-pos i x-scale))]
                      ["alignment-baseline" "middle"]
                      ["text-anchor" "middle"]
@@ -59,9 +54,9 @@
 
 (defn candy-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
-        bar-w-inc (/ page-width bar-n)
-        y-scale (mk-y-scale bar-n page-height)
-        x-scale (mk-x-scale bar-n page-width)]
+        bar-w-inc (/ viz-width bar-n)
+        y-scale (mk-y-scale bar-n viz-height)
+        x-scale (mk-x-scale bar-n viz-width)]
   (.text node (fn [d] (aget d "candies")))
   (set-attrs node [["x" (fn [_ i ] (center-scale-pos i x-scale))]
                    ["y" (fn [d] (- (y-scale (aget d "candies")) 15))]
@@ -74,9 +69,9 @@
 (defn candy-bar-did-mount [node ratom]
   (let [idx (get @ratom :index)
         bar-n (n-kids ratom)
-        bar-w-inc (/ page-width bar-n)
-        y-scale (mk-y-scale bar-n page-height)
-        x-scale (mk-x-scale bar-n page-width)]
+        bar-w-inc (/ viz-width bar-n)
+        y-scale (mk-y-scale bar-n viz-height)
+        x-scale (mk-x-scale bar-n viz-width)]
     (.style node "shape-rendering" "crispEdges")
     (set-attrs node
                [["fill" (fn [_ i] (if (= idx i) "lawngreen" "green"))]
@@ -110,36 +105,47 @@
   (let [res (mapv mkmp (get @ratom :ranks) (get @ratom :candies ))]
     (-> res clj->js)))
 
+(def graph-key
+  {:kind :container
+   :class "key-container"
+   :children
+   [{:kind :elem :class "key-label"
+     :tag "text" :did-mount key-label}
+    {:kind :elem :class "key-candies"
+     :tag "text" :did-mount key-candies}
+    {:kind :elem :class "key-rank"
+     :tag "text" :did-mount key-rank}]})
+
+(def candy-bar
+  {:kind :elem-with-data
+   :class "candy-bar"
+   :tag "rect"
+   :prepare-dataset set-draw-dst
+   :did-mount candy-bar-did-mount})
+
+(def candy-label
+  {:kind :elem-with-data
+   :class "candy-label"
+   :prepare-dataset set-draw-dst
+   :tag "text"
+   :did-mount candy-label-did-mount})
+
+(def rank-label
+  {:kind :elem-with-data
+   :class "rank-label"
+   :prepare-dataset set-draw-dst
+   :tag "text"
+   :did-mount rank-label-did-mount})
+
 (defn viz [ratom]
   [rid3/viz
    {:id "my-viz"
     :ratom ratom
     :svg {:did-mount svg-did-mount}
-    :pieces [{:kind :container
-              :class "key-container"
-              :children
-              [{:kind :elem :class "key-label"
-                :tag "text" :did-mount key-label}
-               {:kind :elem :class "key-candies"
-                :tag "text" :did-mount key-candies}
-               {:kind :elem :class "key-rank"
-                :tag "text" :did-mount key-rank}]}
-             {:kind :elem-with-data
-              :class "candy-bar"
-              :tag "rect"
-              :prepare-dataset set-draw-dst
-              :did-mount candy-bar-did-mount}
-             {:kind :elem-with-data
-              :class "candy-label"
-              :prepare-dataset set-draw-dst
-              :tag "text"
-              :did-mount candy-label-did-mount}
-             {:kind :elem-with-data
-              :class "rank-label"
-              :prepare-dataset set-draw-dst
-              :tag "text"
-              :did-mount rank-label-did-mount}
-             ]}])
+    :pieces [graph-key
+             candy-bar
+             candy-label
+             rank-label]}])
 
 (defn draw-viz [state]
   (r/render [:div [viz state]]
