@@ -29,22 +29,28 @@
 (defn set-attr [node [attr settr]]
   (.attr node attr settr))
 
+;; could change this to acccept all props
+;; input like {:attr [["x" 20] ["y" 30] ...]
+;;             :text "hello"
+;;             :style "something"}
 (defn set-attrs [node attr-opts]
   (doseq [opts attr-opts]
     (set-attr node opts)))
+
+(defn center-scale-pos [idx scale]
+;; paddings  centered      x-dist
+  (+ idx (/ (scale 1) 2) (scale idx)))
 
 ;; There is a macroexpansion for all this repetition in `let`,
 ;;  but I don't know how to do it yet.
 
 (defn rank-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
-        bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         x-scale (mk-x-scale bar-n page-width)]
-
-        (.text node (fn [d] (aget d "rank")))
+    (.text node (fn [d] (aget d "rank")))
     (set-attrs node [["y" (- page-height 10)]
-                     ["x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i)))]
+                     ["x" (fn [_ i ] (center-scale-pos i x-scale))]
                      ["alignment-baseline" "middle"]
                      ["text-anchor" "middle"]
                      ["fill" "black"]
@@ -53,56 +59,49 @@
 
 (defn candy-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
-        bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (mk-y-scale bar-n page-height)
         x-scale (mk-x-scale bar-n page-width)]
-  (-> node
-      ;;               margin pixel  centered        x-dist
-      (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
-      (.attr "y" (fn [d] (- (y-scale (aget d "candies")) 15)))
-      (.attr "text-anchor" "middle")
-      (.attr "alignment-baseline" "middle")
-      (.attr "fill" "green")
-      (.attr "font-size" (str (/ bar-w-inc 1.5) "px") )
-      (.attr "font-family" "sans-serif")
-      (.text (fn [d] (aget d "candies"))))))
+  (.text node (fn [d] (aget d "candies")))
+  (set-attrs node [["x" (fn [_ i ] (center-scale-pos i x-scale))]
+                   ["y" (fn [d] (- (y-scale (aget d "candies")) 15))]
+                   ["text-anchor" "middle"]
+                   ["alignment-baseline" "middle"]
+                   ["fill" "green"]
+                   ["font-size" (str (/ bar-w-inc 1.5) "px") ]
+                   ["font-family" "sans-serif"]])))
 
 (defn candy-bar-did-mount [node ratom]
   (let [idx (get @ratom :index)
         bar-n (n-kids ratom)
-        bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         y-scale (mk-y-scale bar-n page-height)
         x-scale (mk-x-scale bar-n page-width)]
-    (-> node
-        (.style "shape-rendering" "crispEdges")
-        ;; highlight current bar
-        (.attr "fill" (fn [_ i] (if (= idx i) "lawngreen" "green")))
-        (.attr "x" (fn [_ i ] (+ i (x-scale i))))
-        (.attr "y" (fn [d] (y-scale (aget d "candies"))))
-        (.attr "height" (fn [d] (- (y-scale 0) (y-scale (aget d "candies")))))
-        (.attr "opacity" 0.8)
-        (.attr "width" (x-scale 1)))))
+    (.style node "shape-rendering" "crispEdges")
+    (set-attrs node
+               [["fill" (fn [_ i] (if (= idx i) "lawngreen" "green"))]
+                ["x" (fn [_ i ] (+ i (x-scale i)))]
+                ["y" (fn [d] (y-scale (aget d "candies")))]
+                ["height" (fn [d] (- (y-scale 0) (y-scale (aget d "candies"))))]
+                ["opacity" 0.8]
+                ["width" (x-scale 1)]])))
 
 (defn key-label [node ratom]
-  (-> node
-      (.attr "x" 30) (.attr "y" 30)
-      (.text "Key:")
-      (.attr "font-size" "20px" )))
+  (set-attrs node [["font-size" "20px"]
+                   ["x" 30] ["y" 30]])
+  (.text node "Key:"))
 
 (defn key-candies [node ratom]
-  (-> node
-      (.attr "x" 40) (.attr "y" 50)
-      (.attr "font-size" "15px" )
-      (.attr "fill" "green" )
-      (.text "(Green) - How many candies each child has.")))
+  (set-attrs node [["fill" "green" ]
+                   ["x" 40] ["y" 50]
+                   ["font-size" "15px" ]])
+  (.text node "(Green) - How many candies each child has."))
 
 (defn key-rank [node ratom]
-  (-> node
-      (.attr "x" 40) (.attr "y" 70)
-      (.attr "font-size" "15px" )
-      (.text "(Black) - The starting rank of each child.")))
+  (set-attrs node [["x" 40]
+                   ["y" 70]
+                   ["font-size" "15px"]])
+  (.text node "(Black) - The starting rank of each child."))
 
 (defn mkmp [rnk cnd]
   {:rank rnk :candies cnd})
