@@ -7,3 +7,8 @@
   (if (:finished @state)
     "done"
     (js/setTimeout (fn [] (tick state)) (:speed @state))))
+
+(defn run-viz [state]
+  (swp/unfinish state)
+  (tick state))
+

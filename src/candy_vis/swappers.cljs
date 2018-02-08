@@ -1,6 +1,10 @@
 (ns candy-vis.swappers
   (:require [candy-vis.state :as st]))
 
+(defn unfinish [state]
+  (swap! state merge {:finished false
+                      :dir 1}))
+
 (defn algo-step [state updates]
   (swap! state merge updates))
 

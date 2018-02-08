@@ -81,7 +81,7 @@
    [:input.form-control.btn.btn-lg.btn-success
                         {:type :submit
                          :value "Distribute Candies"
-                         :on-click #(run/tick state)}]]])
+                         :on-click #(run/run-viz state)}]]])
 
 (defn options-form [state]
   [:div#options-form

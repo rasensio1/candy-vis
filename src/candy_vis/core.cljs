@@ -16,8 +16,8 @@
 
 
 ;; TODO
-;; Clean up project.clj (vi deps, etc)
-;; distribute candies goes again no matter what
+;; push to gh pages
+;; Reset candies button
 ;; Bind to reagent-forms
 ;; fill in tests
 ;; Display total when algo finishes
