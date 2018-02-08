@@ -139,6 +139,6 @@
               :did-mount rank-label-did-mount}
              ]}])
 
-(defn draw-state [state]
+(defn draw-viz [state]
   (r/render [:div [viz state]]
             (.getElementById js/document "data-viz")))

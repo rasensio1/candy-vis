@@ -60,6 +60,14 @@
             :min 1 :max 3
             :on-change #(swp/change-speed state (-> % .-target .-value int))}]])
 
+(defn go-button [state]
+  [:div.row.justify-content-md-center
+   [:div#go-button
+    [:input.form-control.btn.btn-lg.btn-success
+     {:type :submit
+      :value "Distribute Candies"
+      :on-click #(run/run-viz state)}]]])
+
 (defn add-container [state]
   [:div#add-container.greybox
    [:div.text-center [:h4 "Add Kids"]]
@@ -77,14 +85,6 @@
   [:div#form-container
    [add-container state]
    [other-container state]])
-
-(defn go-button [state]
-  [:div.row.justify-content-md-center
-   [:div#go-button
-   [:input.form-control.btn.btn-lg.btn-success
-                        {:type :submit
-                         :value "Distribute Candies"
-                         :on-click #(run/run-viz state)}]]])
 
 (defn options-form [state]
   [:div#options-form
