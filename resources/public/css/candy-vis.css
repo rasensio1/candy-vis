@@ -1,9 +1,17 @@
 #candies-header {
     padding: 2em;}
 
+#dashboard {
+    display: flex;
+}
+
+#data-viz {
+    padding: 3em;
+}
+
 #options-form {
-    margin: 7em;
-    margin-top: 6em;}
+    padding: 3em;
+}
 
 #form-container {
     display: flex;}

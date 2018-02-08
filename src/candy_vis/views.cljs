@@ -29,7 +29,7 @@
      [:label "With random ranks. (How many?)"]
      [:div.inlinesec
       [:input.form-control.f80
-       {:type :number :placeholder "How many random kids?"
+       {:type :number :placeholder "20"
         :on-change #(reset! num (-> % .-target .-value))}]
       [:input.form-control.f20
        {:type :submit :value "Submit"

@@ -10,7 +10,7 @@
 
 
 (r/render [vw/header] (js/document.getElementById "header"))
-(r/render [vw/options-form app-state] (js/document.getElementById "body"))
+(r/render [vw/options-form app-state] (js/document.getElementById "options-dash"))
 (drw/draw-state app-state)
 
 
