@@ -44,7 +44,7 @@
                                     :source-map-timestamp true } }
                         {:id "prod"
                          :source-paths ["src"]
-                         :compiler {:optimizations :none
+                         :compiler {:optimizations :simple
                                     :output-to "resources/public/js/candy_vis.js"
                                     :main "candy-vis.core"
                                     :asset-path "js/compiled/out"
