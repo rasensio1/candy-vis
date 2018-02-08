@@ -15,11 +15,6 @@
   (doseq [opts attr-opts]
     (set-attr node opts)))
 
-(defn svg-did-mount [node ratom]
-  (set-attrs node [["width" viz-width]
-                   ["height" viz-height]])
-  (.style node "background-color" "white"))
-
 (defn mk-scale [domain length]
   (-> js/d3
       .scaleLinear
@@ -36,9 +31,12 @@
 ;; paddings  centered      x-dist
   (+ idx (/ (scale 1) 2) (scale idx)))
 
-;; There is a macroexpansion for all this repetition in `let`,
-;;  but I don't know how to do it yet.
+(defn svg-did-mount [node ratom]
+  (set-attrs node [["width" viz-width]
+                   ["height" viz-height]])
+  (.style node "background-color" "white"))
 
+;; No macros in cljs? would be a good case with all these same `let` bindings
 (defn rank-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
         bar-w-inc (/ viz-width bar-n)
