@@ -12,13 +12,12 @@
 (r/render [vw/header] (js/document.getElementById "header"))
 (r/render [vw/options-form app-state] (js/document.getElementById "options-dash"))
 (r/render [vw/problem-description] (js/document.getElementById "description"))
-(drw/draw-state app-state)
+(drw/draw-viz app-state)
 
 
 ;; TODO
-;; push to gh pages
-;; Reset candies button
 ;; Bind to reagent-forms
 ;; fill in tests
 ;; Display total when algo finishes
 ;; Choose algorithm
+;; figure out advanced optimizations

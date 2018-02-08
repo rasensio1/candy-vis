@@ -44,18 +44,29 @@
 
 (defn reset-container [state]
   [:div.reset-button.greybox.inlinesec
-   [:h5.f80 "Reset all"]
+   [:h5.f80 "Reset"]
    [:input.form-control.f20 {:type :submit
-                         :value "Submit"
-                         :on-click #(swp/reset-state state)}]])
+                         :value "Everything"
+                             :on-click #(swp/reset-state state)}]
+   [:input.form-control.f20 {:type :submit
+                             :value "Candies"
+                             :on-click #(swp/reset-candies state)}]])
 
 (defn speed-opts-container [state]
   [:div.speed-opts-cointainer.greybox.inlinesec
-   [:h5.f80 "Speed"]
+   [:div.f80 [:h5 (str "Speed: " (get @state :speed))]]
    [:input {:type :range
-            :default-value 300
-            :min 1 :max 700
-            :on-change #(swp/change-speed state (-> % .-target .-value))}]])
+            :default-value (get @state :speed)
+            :min 1 :max 3
+            :on-change #(swp/change-speed state (-> % .-target .-value int))}]])
+
+(defn go-button [state]
+  [:div.row.justify-content-md-center
+   [:div#go-button
+    [:input.form-control.btn.btn-lg.btn-success
+     {:type :submit
+      :value "Distribute Candies"
+      :on-click #(run/run-viz state)}]]])
 
 (defn add-container [state]
   [:div#add-container.greybox
@@ -74,14 +85,6 @@
   [:div#form-container
    [add-container state]
    [other-container state]])
-
-(defn go-button [state]
-  [:div.row.justify-content-md-center
-   [:div#go-button
-   [:input.form-control.btn.btn-lg.btn-success
-                        {:type :submit
-                         :value "Distribute Candies"
-                         :on-click #(run/run-viz state)}]]])
 
 (defn options-form [state]
   [:div#options-form

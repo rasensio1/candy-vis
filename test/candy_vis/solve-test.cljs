@@ -17,10 +17,10 @@
 
 (deftest next-step-test
   (testing "End of forward iteration"
-    (is (= {:dir -1} (sol/next-step 
+    (is (= {:dir -1} (sol/next-step
                        (assoc dummy-state :index 2)))))
   (testing "End of backward iteration"
-    (is (= {:finished true} (sol/next-step 
+    (is (= {:finished true} (sol/next-step
                        (assoc dummy-state :index 0 :dir -1)))) )
   (testing "Incrases candy"
     (is (= {:index 1 :candies [1 2 1]} (sol/next-step
@@ -40,16 +40,14 @@
   (testing "Can solve a complex situation"
     (is (= [1 2 1 2 1 2 3 4 2 1] (:candies (solver (assoc dummy-state
                                                     :candies [1 1 1 1 1 1 1 1 1 1]
-                                                    :ranks [2 4 2 6 1 7 8 9 2 1])))))) 
+                                                    :ranks [2 4 2 6 1 7 8 9 2 1]))))))
   (testing "Can solve always increasing"
-    (is (= [1 2 3 4 5 6 7 8] (:candies (solver (assoc dummy-state 
+    (is (= [1 2 3 4 5 6 7 8] (:candies (solver (assoc dummy-state
                                                       :ranks [1 2 3 4 5 6 7 8]
-                                                      :candies [1 1 1 1 1 1 1 1])))))) 
+                                                      :candies [1 1 1 1 1 1 1 1]))))))
 
   (testing "Can solve always decreasing"
-    (is (= [8 7 6 5 4 3 2 1] (:candies (solver (assoc dummy-state 
+    (is (= [8 7 6 5 4 3 2 1] (:candies (solver (assoc dummy-state
                                                       :ranks [8 7 6 5 4 3 2 1]
-                                                      :candies [1 1 1 1 1 1 1 1]))))))
-  
-  )
+                                                      :candies [1 1 1 1 1 1 1 1])))))))
 
