@@ -9,6 +9,11 @@
     padding: 3em;
 }
 
+#my-viz {
+    border-bottom: solid;
+    border-width: 1px;
+}
+
 #options-form {
     padding: 3em;
 }
@@ -49,6 +54,10 @@
 
 #go-button {
     margin-top: 2em;
+}
+
+#description {
+    padding: 4em;
 }
 
 

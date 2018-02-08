@@ -110,7 +110,7 @@
 
 (defn viz [ratom]
   [rid3/viz
-   {:id "some-id"
+   {:id "my-viz"
     :ratom ratom
     :svg {:did-mount svg-did-mount}
     :pieces [{:kind :container
