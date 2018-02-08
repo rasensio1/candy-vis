@@ -41,4 +41,11 @@
                                     :asset-path "cljs/tests/out"
                                     :output-dir "resources/public/cljs/tests/out"
                                     :output-to "resources/public/cljs/tests/all-tests.js"
-                                    :source-map-timestamp true } } ] })
+                                    :source-map-timestamp true } }
+                        {:id "prod"
+                         :source-paths ["src"]
+                         :compiler {:optimizations :advanced
+                                    :output-to "resources/public/js/candy_vis.js"
+                                    :main "candy-vis.core"
+                                    :asset-path "js/compiled/out"
+                                    :source-map-timestamp true}}] })
