@@ -14,6 +14,18 @@
       (.attr "height" page-height)
       (.style "background-color" "white")))
 
+(defn mk-scale [domain length]
+  (-> js/d3
+      .scaleLinear
+      (.domain #js [0 domain])
+      (.range length)))
+
+(defn mk-x-scale [bar-n width]
+    (mk-scale bar-n (clj->js [0 (- width (dec bar-n))])))
+
+(defn mk-y-scale [bar-n height]
+   (mk-scale bar-n (clj->js [height 0])))
+
 ;; There is a macroexpansion for all this repetition in `let`,
 ;;  but I don't know how to do it yet.
 
@@ -21,10 +33,7 @@
   (let [bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
-        x-scale (-> js/d3
-                    .scaleLinear
-                    (.domain #js [0 bar-n])
-                    (.range #js [0 (- page-width (dec bar-n))]))]
+        x-scale (mk-x-scale bar-n page-width)]
     (-> node
         (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
 
@@ -40,14 +49,8 @@
   (let [bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
-        y-scale (-> js/d3
-                    .scaleLinear
-                    (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
-                    (.range #js [page-height 0]))
-        x-scale (-> js/d3
-                    .scaleLinear
-                    (.domain #js [0 bar-n])
-                    (.range #js [0 (- page-width (dec bar-n))]))]
+        y-scale (mk-y-scale bar-n page-height)
+        x-scale (mk-x-scale bar-n page-width)]
   (-> node
       ;;               margin pixel  centered        x-dist
       (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
@@ -64,14 +67,8 @@
         bar-n (n-kids ratom)
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
-        y-scale (-> js/d3
-                    .scaleLinear
-                    (.domain #js [0 (inc bar-n)]) ;; max candies is (n + 1)
-                    (.range #js [page-height 0]))
-        x-scale (-> js/d3
-                    .scaleLinear
-                    (.domain #js [0 bar-n])
-                    (.range #js [0 (- page-width (dec bar-n))]))]
+        y-scale (mk-y-scale bar-n page-height)
+        x-scale (mk-x-scale bar-n page-width)]
     (-> node
         (.style "shape-rendering" "crispEdges")
         ;; highlight current bar
