@@ -1,21 +1,14 @@
 (ns candy-vis.swappers
   (:require [candy-vis.state :as st]))
 
-(defn unfinish [state]
-  (swap! state merge {:finished false
-                      :dir 1}))
-
-(defn algo-step [state updates]
-  (swap! state merge updates))
-
 (defn add-kid [state rank]
   (swap! state (partial merge-with conj) {:candies 1
-                                           :ranks rank}))
+                                          :ranks rank}))
 
 (defn get-ranks [raw-ranks]
   (as-> (clojure.string/replace raw-ranks #"[^,\d]" "") s
-       (clojure.string/split s #"," )
-       (map int s)))
+    (clojure.string/split s #"," )
+    (map int s)))
 
 (defn add-kids [state ranks]
   (doseq [n (get-ranks ranks)]
@@ -23,6 +16,14 @@
 
 (defn add-rando-kids [state n-kids]
   (dotimes [n n-kids] (add-kid state (+ 1 (rand-int 50)))))
+
+
+(defn unfinish [state]
+  (swap! state merge {:finished false
+                      :dir 1}))
+
+(defn algo-step [state updates]
+  (swap! state merge updates))
 
 (defn remove-kid [state]
   (swap! state assoc :candies (pop (:candies @state))

@@ -54,11 +54,11 @@
 
 (defn speed-opts-container [state]
   [:div.speed-opts-cointainer.greybox.inlinesec
-   [:h5.f80 "Speed"]
+   [:div.f80 [:h5 (str "Speed: " (get @state :speed))]]
    [:input {:type :range
-            :default-value 300
-            :min 1 :max 700
-            :on-change #(swp/change-speed state (-> % .-target .-value))}]])
+            :default-value (get @state :speed)
+            :min 1 :max 3
+            :on-change #(swp/change-speed state (-> % .-target .-value int))}]])
 
 (defn add-container [state]
   [:div#add-container.greybox

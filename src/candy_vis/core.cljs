@@ -16,7 +16,6 @@
 
 
 ;; TODO
-;; Reset candies button
 ;; Bind to reagent-forms
 ;; fill in tests
 ;; Display total when algo finishes

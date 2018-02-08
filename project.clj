@@ -8,6 +8,7 @@
                  [devcards "0.2.4"]
                  [reagent "0.7.0" :exclusions [cljsjs/react]]
                  [cljs-react-test "0.1.4-SNAPSHOT"]
+                 [com.cemerick/piggieback "0.2.2"]
                  [cljsjs/react-with-addons "15.2.0-0"]
                  [cljsjs/react-dom "15.2.0-0" :exclusions [cljsjs/react]]
                  [org.clojure/clojure "1.8.0"]
