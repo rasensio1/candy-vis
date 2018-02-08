@@ -16,7 +16,6 @@
 
 
 ;; TODO
-;; push to gh pages
 ;; Reset candies button
 ;; Bind to reagent-forms
 ;; fill in tests

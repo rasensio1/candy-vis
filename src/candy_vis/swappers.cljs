@@ -31,5 +31,8 @@
 (defn reset-state [state]
   (reset! state st/initial-state))
 
+(defn reset-candies [state]
+  (swap! state update-in [:candies] #(mapv (fn [_] 1) %)))
+
 (defn change-speed [state speed]
   (swap! state assoc :speed speed))

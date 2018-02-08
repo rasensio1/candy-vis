@@ -44,10 +44,13 @@
 
 (defn reset-container [state]
   [:div.reset-button.greybox.inlinesec
-   [:h5.f80 "Reset all"]
+   [:h5.f80 "Reset"]
    [:input.form-control.f20 {:type :submit
-                         :value "Submit"
-                         :on-click #(swp/reset-state state)}]])
+                         :value "Everything"
+                             :on-click #(swp/reset-state state)}]
+   [:input.form-control.f20 {:type :submit
+                             :value "Candies"
+                             :on-click #(swp/reset-candies state)}]])
 
 (defn speed-opts-container [state]
   [:div.speed-opts-cointainer.greybox.inlinesec
