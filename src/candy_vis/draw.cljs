@@ -26,6 +26,13 @@
 (defn mk-y-scale [bar-n height]
    (mk-scale bar-n (clj->js [height 0])))
 
+(defn set-attr [node [attr settr]]
+  (.attr node attr settr))
+
+(defn set-attrs [node attr-opts]
+  (doseq [opts attr-opts]
+    (set-attr node opts)))
+
 ;; There is a macroexpansion for all this repetition in `let`,
 ;;  but I don't know how to do it yet.
 
@@ -34,16 +41,15 @@
         bar-h-inc (/ page-height bar-n)
         bar-w-inc (/ page-width bar-n)
         x-scale (mk-x-scale bar-n page-width)]
-    (-> node
-        (.attr "x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i))))
 
-        (.attr "y" (- page-height 10))
-        (.attr "text-anchor" "middle")
-        (.attr "alignment-baseline" "middle")
-        (.attr "fill" "black")
-        (.attr "font-size" (str (/ bar-w-inc 2) "px") )
-        (.attr "font-family" "sans-serif")
-        (.text (fn [d] (aget d "rank"))))))
+        (.text node (fn [d] (aget d "rank")))
+    (set-attrs node [["y" (- page-height 10)]
+                     ["x" (fn [_ i ] (+ i (/ (x-scale 1) 2) (x-scale i)))]
+                     ["alignment-baseline" "middle"]
+                     ["text-anchor" "middle"]
+                     ["fill" "black"]
+                     ["font-size" (str (/ bar-w-inc 2) "px")]
+                     ["font-family" "sans-serif"]])))
 
 (defn candy-label-did-mount [node ratom]
   (let [bar-n (n-kids ratom)
