@@ -3,7 +3,8 @@
 A ClojureScript project that visualizes an algorithm that distributes candy to
 children.
 
-[Source](https://www.hackerrank.com/challenges/candies/problem)
+[Production](https://rasensio1.github.io/candy-vis/)
+[Problem Source](https://www.hackerrank.com/challenges/candies/problem)
 
 ## Problem text
 
